@@ -1,0 +1,25 @@
+samp.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cm
+  rotate: false
+  xy: 96, 800
+  size: 91, 108
+  orig: 91, 108
+  offset: 0, 0
+  index: -1
+bg
+  rotate: true
+  xy: 0, 0
+  size: 800, 480
+  orig: 800, 480
+  offset: 0, 0
+  index: -1
+tileset
+  rotate: false
+  xy: 0, 800
+  size: 96, 160
+  orig: 128, 256
+  offset: 0, 96
+  index: -1
