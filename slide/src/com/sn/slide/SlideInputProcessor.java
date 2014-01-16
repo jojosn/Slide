@@ -1,10 +1,19 @@
 package com.sn.slide;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
 
-public class input implements InputProcessor {
-
+public class SlideInputProcessor implements InputProcessor {
+	public static final String TAG = SlideInputProcessor.class.getName();
+	private SlideMap map;
+	private float oldScreenX;
+	private float oldScreenY;
+	
+	public SlideInputProcessor(SlideMap map) {
+		this.map = map;
+	}
+	
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
@@ -25,19 +34,25 @@ public class input implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		Gdx.app.debug(TAG, "touchDown x="+screenX+" y="+screenY);
+		oldScreenX = screenX;
+		oldScreenY = screenY;
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		Gdx.app.log(TAG, "touchUp x="+screenX+" y="+screenY);
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
+		float dx = screenX - oldScreenX;
+		float dy = screenY - oldScreenY;
+		oldScreenX = screenX;
+		oldScreenY = screenY;
+		map.translate(-dx, dy);
 		return false;
 	}
 

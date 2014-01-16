@@ -1,17 +1,11 @@
 package com.sn.slide.screen;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sn.slide.Slide;
 
 public class SplashScreen implements Screen {
 
-	private Slide slideGame;
-	private SpriteBatch batch;
-	//private 
-	
 	public SplashScreen(Slide slide) {
-		slideGame = slide;
 	}
 
 	@Override

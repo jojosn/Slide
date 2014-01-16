@@ -4,14 +4,12 @@ import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
-import com.sn.slide.component.PositionComponent;
 
 public class ParallaxMap {
 	
@@ -98,7 +96,6 @@ public class ParallaxMap {
 		renderer.setView(camera);
 		//batch = new SpriteBatch();
 		
-		
 		width = camera.viewportWidth * camera.zoom;
 		height = camera.viewportHeight * camera.zoom;
 		//viewBounds.set(camera.position.x - width / 2, camera.position.y - height / 2, width, height);
@@ -106,12 +103,6 @@ public class ParallaxMap {
 	
 	public void render() {
 		float dt = Gdx.graphics.getDeltaTime();
-		//camera.position.x += (100*dt);
-		//adjustCamera(dt);
-		//camera.translate(1,0);
-		
-		
-		//camera.update();
 		renderer.setView(camera.calculateParallaxMatrix(0, 0), camera.position.x - width / 2, camera.position.y - height / 2, width, height);
 		camera.update();
 		renderer.render(bgLayer);
@@ -119,54 +110,9 @@ public class ParallaxMap {
 		renderer.setView(camera.calculateParallaxMatrix(0.5f, 0), camera.position.x - width / 2, camera.position.y - height / 2, width, height);
 		camera.update();
 		renderer.render(farLayer);
-		/*
-		camera.translate(1, 0);
-		camera.update();
-		renderer.setView(camera);
-		renderer.render(farLayer);
-		
-		camera.translate(2, 0);
-		camera.update();
-		renderer.setView(camera);
-		renderer.render(nearLayer);
-		
-		camera.translate(3, 0);
-		camera.update();
-		renderer.setView(camera);
-		renderer.render(groundLayer);
-		*/
-		
-		//PositionComponent position = entity.getComponent(PositionComponent.class);
-		//camera.lookAt(position.getX(), position.getY(), 0);
-		//camera.position.x = position.getX();
-		//camera.update();
-		//renderer.setView(camera);
-		
-		//batch.setProjectionMatrix(camera.calculateParallaxMatrix(0, 0));
-		//batch.disableBlending();
-		//batch.begin();
-		///renderer.render(bgLayer);
-		//batch.end();
-		//batch.enableBlending();
-		
-		//batch.setProjectionMatrix(camera.calculateParallaxMatrix(0.3f, 0));
-		//batch.begin();
-		//renderer.render(farLayer);
-		//batch.end();
-		
-		//batch.setProjectionMatrix(camera.calculateParallaxMatrix(0.5f, 0));
-		//batch.begin();
-		//renderer.render(nearLayer);
-		//batch.end();
-		
-		//batch.setProjectionMatrix(camera.calculateParallaxMatrix(1f, 0));
-		//batch.begin();
-		//renderer.render(groundLayer);
-		//batch.end();
 	}
 	
 	public void dispose() {
-		//batch.dispose();
 		map.dispose();
 	}
 	
@@ -179,14 +125,5 @@ public class ParallaxMap {
 		float x = oldx + (100*dt);
 		System.out.println("newx = " + x);
 		camera.translate(x, y);
-		/*
-		camera.unproject(curr.set(x, y, 0));
-		if (!(last.x == -1 && last.y == -1 && last.z == -1)) {
-			camera.unproject(delta.set(last.x, last.y, 0));
-			delta.sub(curr);
-			camera.position.add(delta.x, delta.y, 0);
-		}
-		last.set(x, y, 0);
-		*/
 	}
 }
