@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class SlideMap {
@@ -19,56 +20,59 @@ public class SlideMap {
 	private TiledMap map;
 	private Array<TiledMapRenderer> renderers;
 	private Array<OrthographicCamera> cameras;
-	
-	private TiledMapRenderer renderer;
-	private TiledMapRenderer renderer1;
-	private OrthographicCamera camera;
-	private OrthographicCamera camera1;
-	
-	private final int[] bgLayer = {0};
-	private final int[] farLayer = {1};
-	private final int[] farLayer1 = {2};
+	private Array<Vector2> speeds;
+	private Array<int[]> layerIndexs;
+	private int layerCount;
 	
 	public SlideMap(String fileName) {
+		renderers = new Array<TiledMapRenderer>();
+		cameras = new Array<OrthographicCamera>();
+		speeds = new Array<Vector2>();
+		layerIndexs = new Array<int[]>();
+		
 		int sw = Gdx.graphics.getWidth();
 		int sh = Gdx.graphics.getHeight();
 		
+		TiledMapRenderer renderer;
+		OrthographicCamera camera;
+		
 		map = new TmxMapLoader().load(fileName);
 		MapLayers layers = map.getLayers();
+		layerCount = layers.getCount();
+		int idx = 0;
 		for (Iterator<MapLayer> it = layers.iterator(); it.hasNext();) {
 			MapLayer layer = it.next();
 			MapProperties properties = layer.getProperties();
+			float speedx = 1f;
+			float speedy = 1f;
 			if (properties.containsKey("speed")) {
-				Gdx.app.log(TAG, (String) properties.get("speed"));
+				speedx = speedy = Float.parseFloat( (String) properties.get("speed") );
 			}
+			if (properties.containsKey("speedx")) {
+				speedx = Float.parseFloat( (String) properties.get("speedx") );
+			}
+			if (properties.containsKey("speedy")) {
+				speedy = Float.parseFloat( (String) properties.get("speedy") );
+			}
+			speeds.add(new Vector2(speedx, speedy));
+			
+			camera = new OrthographicCamera(sw, sh);
+			camera.translate(sw/2, sh/2);
+			camera.update();
+			cameras.add(camera);
+			
+			renderer = new OrthogonalTiledMapRenderer(map);
+			renderer.setView(camera);
+			renderers.add(renderer);
+			
+			layerIndexs.add(new int[]{idx++});
 		}
-		
-		MapProperties properties = map.getProperties();
-		for (Iterator<String> it = properties.getKeys(); it.hasNext();) {
-			String keystr = it.next();
-			Gdx.app.log(TAG, keystr);
-		}
-		
-		/*
-		camera = new OrthographicCamera(sw, sh);
-		camera.translate(sw/2, sh/2);
-		camera.update();
-		camera1 = new OrthographicCamera(sw, sh);
-		camera1.translate(sw/2, sh/2);
-		camera1.update();
-		
-		
-		renderer = new OrthogonalTiledMapRenderer(map);
-		renderer.setView(camera);
-		renderer1 = new OrthogonalTiledMapRenderer(map);
-		renderer1.setView(camera1);
-		*/
 	}
 	
 	public void render() {
-		//renderer.render();
-		renderer.render(farLayer);
-		renderer1.render(bgLayer);
+		for (int i = 0; i < layerCount; i++) {
+			renderers.get(i).render(layerIndexs.get(i));
+		}
 	}
 	
 	public void dispose() {
@@ -76,12 +80,12 @@ public class SlideMap {
 	}
 	
 	public void translate(float x, float y) {
-		camera.translate(x, y);
-		camera.update();
-		renderer.setView(camera);
-		
-		camera1.translate(x*0.5f, y*0.5f);
-		camera1.update();
-		renderer1.setView(camera1);
+		for (int i = 0; i < layerCount; i++) {
+			Vector2 speed = speeds.get(i);
+			OrthographicCamera camera = cameras.get(i);
+			camera.translate(x*speed.x, y*speed.y);
+			camera.update();
+			renderers.get(i).setView(camera);
+		}
 	}
 }

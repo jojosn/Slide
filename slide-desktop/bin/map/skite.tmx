@@ -5,7 +5,7 @@
  </tileset>
  <layer name="bg" width="75" height="15">
   <properties>
-   <property name="speed" value="1"/>
+   <property name="speed" value="0"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJzd0AWPyAEAxuE73TfdTDfTzXQz3Uw3083knZ7u7p5uppvpZrqZ7ng+x//dng/w/kaEhizpSStqU4a8pCM+oXwICVnykEscZgtLmcoIetKK2pQhL+mITyghAdlILXrRmjqUJR/pSUAkPvr7iMscYSvLmMZIetGaOpQlH+lJQKQAtRqlRW/aUJdy5CcDCYnMJ38fc4WjbGM50xlFb9pQl3LkJwMJiRygVqO16ENb6lGeAmQkEVH47O8TrnKM7axgBqPpQ1vqUZ4CZCQRUQLUaowWfWlHfSpQkEwkJipf/H3KNY6zg5XMZAx9aUd9KlCQTCQmaoBajdWiH+1pQEUKkZkkROOrv8+4zgl2sopZjKUf7WlARQqRmSREC1CrcC3604GGVKIwWUhKdL75+5wbnGQXq5lNOP3pQEMqUZgsJCV6gFpFaDGAjjSiMkXISjJi8N3fF9zkFLtZwxwiGEBHGlGZImQlGTEC1GqcFgPpRGOqUJRsJCcmP/x9yS1Os4e1zGUcA+lEY6pQlGwkJ2aAWo3XYhCdaUJVipGdFMTip7+vuM0Z9rKOeYxnEJ1pQlWKkZ0UxApQqwlaDKYLTalGcXKQktj88vc1dzjLPtYznwkMpgtNqUZxcpCS2AFqNVGLIXSlGdUpQU5SEYff/r7hLufYzwYWMJEhdKUZ1SlBTlIRJ0CtJmkxlG40pwYlyUVq4vLH37fc4zwH2MhCJjGUbjSnBiXJRWriBqjVZC2G0Z0W1KQUuUlDPP76+477XOAgm1jEZIbRnRbUpBS5SUO8ALWaosVwetCSWpQmD2kJ45+/73nARQ6xmcVMYTg9aEktSpOHtIQFqNV/1RSI7w==
@@ -13,15 +13,15 @@
  </layer>
  <layer name="far" width="75" height="15">
   <properties>
-   <property name="speed" value="0.8"/>
+   <property name="speed" value="0.2"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztlMEJgDAMRZP9r+oAok6gTqDe3ch66KVQ840pRciDnALJ66ctkeM4zj9omajj2hb1aVjOYgy9qXBWiEdtBpazWEJvLXwGxAOhZOYzy1nsoXc89C38EA8EbebIGTaWs7Dwk1wsPG5ymUv7v97rOF/rZ+Xy5t7mMpf2azNO52v9EBcEi79M2q/NOJ1vwZc3ZvGXafeju+P83guu08urQF0MXvpy
+   eJztlLENgDAMBO39W2ACYAJgAmAuQpEmUvBjHFlIvtaS//JKQhQEQfAPeiYa2NvCn47lLqY0mxt3hXh4M7LcxZpmW+MzIB4ILTtfWO7iSLPzYW7hh3ggaDtHzrCz3IWFn+Ri4XFT61zK/3qv836tn5XLm3tb61zK13Zc7tf6IS4IFn+ZlK/tuNxvwZc3ZvGXafPR7Lw/CAJfLo1lT6U=
   </data>
  </layer>
  <layer name="near" width="75" height="15">
   <properties>
-   <property name="speed" value="0.6"/>
+   <property name="speed" value="0.5"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJzt0csKACAIRFH7/1X1w7WOXmSg1D3QSogZFQEAAFoxiKT6crBOMuc1504uTfbbvVf/9eYedu8hg9aow6ybVe8X9t3a7XRyJwD4UQGc2RuR
@@ -29,10 +29,10 @@
  </layer>
  <layer name="ground" width="75" height="15">
   <properties>
-   <property name="speed" value="0.4"/>
+   <property name="speed" value="1.0"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20LL6AAAAAAeBsRlAAB
+   eJzt0LEJADAIRUHdf4sMY5+NskIaEeQOXu3HCAAAYIvK6QW7TP+z+/5J/Xalhh5wBK0j
   </data>
  </layer>
 </map>
