@@ -35,4 +35,7 @@
    eJzt0LEJADAIRUHdf4sMY5+NskIaEeQOXu3HCAAAYIvK6QW7TP+z+/5J/Xalhh5wBK0j
   </data>
  </layer>
+ <objectgroup draworder="topdown" name="phy" width="75" height="15">
+  <object x="0" y="384" width="1161" height="97"/>
+ </objectgroup>
 </map>
