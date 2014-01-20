@@ -1,4 +1,4 @@
-package com.sn.slide.screen;
+package com.sn.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,13 +7,13 @@ import com.sn.slide.Slide;
 import com.sn.slide.SlideInputProcessor;
 import com.sn.slide.SlideMap;
 
-public class SampleScreen implements Screen {
-	public static final String TAG = SampleScreen.class.getName();
-	private Slide slide;
+public class GameScreen implements Screen {
+	public static final String TAG = GameScreen.class.getName();
+	//private Slide slide;
 	private SlideMap map;
 	
-	public SampleScreen(Slide slide) {
-		this.slide = slide;
+	public GameScreen(Slide slide) {
+		//this.slide = slide;
 	}
 	
 	@Override
