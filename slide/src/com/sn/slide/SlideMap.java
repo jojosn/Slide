@@ -23,8 +23,16 @@ public class SlideMap {
 	private Array<Vector2> speeds;
 	private Array<int[]> layerIndexs;
 	private int layerCount;
+	private OrthographicCamera groundCamera;
+	
+	private int width;
+	private int height;
+	private int[] limits = {0,0,0,0};
+	private Vector2 adjustedxy;
 	
 	public SlideMap(String fileName) {
+		adjustedxy = new Vector2();
+		
 		renderers = new Array<TiledMapRenderer>();
 		cameras = new Array<OrthographicCamera>();
 		speeds = new Array<Vector2>();
@@ -66,7 +74,28 @@ public class SlideMap {
 			renderers.add(renderer);
 			
 			layerIndexs.add(new int[]{idx++});
+			
+			if (properties.containsKey("ground")) {
+				groundCamera = camera;
+			}
 		}
+		
+		// calc map limits
+		MapProperties properties = map.getProperties();
+		if (properties.containsKey("width")) {
+			int mw = (Integer) properties.get("width");
+			int tw = (Integer) properties.get("tilewidth");
+			width = mw * tw;
+		}
+		if (properties.containsKey("height")) {
+			int mh = (Integer) properties.get("height");
+			int th = (Integer) properties.get("tileheight");
+			height = mh * th;
+		}
+		limits[0] = sw/2;
+		limits[1] = width - sw/2;
+		limits[2] = sh/2;
+		limits[3] = height - sh/2;
 	}
 	
 	public void render() {
@@ -79,7 +108,28 @@ public class SlideMap {
 		map.dispose();
 	}
 	
+	private void adjustxy(float x, float y) {
+		float gx = groundCamera.position.x;
+		float gy = groundCamera.position.y;
+		if (x+gx < limits[0]) {
+			x = limits[0] - gx;
+		}
+		if (x+gx > limits[1]) {
+			x = limits[1] - gx;
+		}
+		if (y+gy < limits[2]) {
+			y = limits[2] - gy;
+		}
+		if (y+gy > limits[3]) {
+			y = limits[3] - gy;
+		}
+		adjustedxy.set(x, y);
+	}
+	
 	public void translate(float x, float y) {
+		adjustxy(x, y);
+		x = adjustedxy.x;
+		y = adjustedxy.y;
 		for (int i = 0; i < layerCount; i++) {
 			Vector2 speed = speeds.get(i);
 			OrthographicCamera camera = cameras.get(i);

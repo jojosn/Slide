@@ -1,6 +1,6 @@
 package com.sn.stategraphs;
 
-public class StateGraph {
+public class stategraph {
 	public void Go2FirstState() {
 		
 	}

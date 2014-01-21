@@ -1,5 +1,11 @@
 package com.sn.components;
 
-public class Component {
+import com.sn.prefabs.entity;
 
+public class component {
+	protected entity ent;
+	
+	public void SetEntity(entity ent) {
+		this.ent = ent;
+	}
 }

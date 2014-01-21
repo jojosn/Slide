@@ -1,0 +1,12 @@
+. limit map camera
+. player and player control
+. enemy and AI framework
+. other entity
+. physics world
+. level data
+. loading resource and change scene/level
+. skeleton animation and tools and BOX2D
+. entity punch action
+
+. UI framework and tools
+. sound effect system

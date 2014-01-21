@@ -17,6 +17,7 @@ public class Spine {
 	private TextureAtlas atlas;
 	private Skeleton skeleton;
 	private AnimationState animState;
+	private SpriteBatch batch;
 	
 	//private Array<Event> events = new Array<Event>();
 	//private Animation animation;
@@ -24,6 +25,7 @@ public class Spine {
 	
 	public Spine(String spinePath) {
 		renderer = new SkeletonRenderer();
+		batch = new SpriteBatch();
 		//debugRenderer = new SkeletonRendererDebug();
 		
 		atlas = new TextureAtlas(Gdx.files.internal(spinePath+".atlas"));
@@ -42,8 +44,8 @@ public class Spine {
 		
 		skeleton = new Skeleton(skeletonData);
 		skeleton.setToSetupPose();
-		skeleton.setX(50);
-		skeleton.setY(95);
+		//skeleton.setX(50);
+		//skeleton.setY(95);
 	}
 	
 	public void playAnimation(String animationName) {
@@ -51,7 +53,7 @@ public class Spine {
 		animState.addAnimation(0, "walk", true, 0);
 	}
 	
-	public void render(SpriteBatch batch, float dt) {
+	public void render(float delta) {
 		/*
 		float lastTime = time;
 		time += dt;
@@ -59,12 +61,13 @@ public class Spine {
 		animation.apply(skeleton, lastTime, time, true, events);
 		if (events.size > 0) System.out.println(events);
 		*/
-	
-		skeleton.update(dt);
+		batch.begin();
+		skeleton.update(delta);
 		skeleton.updateWorldTransform();
-		animState.update(dt);
+		animState.update(delta);
 		animState.apply(skeleton);
 		renderer.draw(batch, skeleton);
+		batch.end();
 		//debugRenderer.draw(skeleton);
 	}
 	
@@ -78,5 +81,6 @@ public class Spine {
 	
 	public void dispose() {
 		atlas.dispose();
+		batch.dispose();
 	}
 }

@@ -1,12 +1,14 @@
-package com.sn.slide;
+package com.sn.prefabs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ArrayMap;
-import com.sn.components.Component;
-import com.sn.stategraphs.StateGraph;
+import com.badlogic.gdx.utils.reflect.Constructor;
+import com.sn.components.component;
+import com.sn.components.spineanimation;
+import com.sn.stategraphs.stategraph;
 
-public class Entity { 
-	public static final String TAG = Entity.class.getName();
+public class entity { 
+	public static final String TAG = entity.class.getName();
 	
 	private static ArrayMap<String, Class<?>> Components = new ArrayMap<String, Class<?>>();
 	private static ArrayMap<String, Class<?>> StateGraphs = new ArrayMap<String, Class<?>>();
@@ -16,15 +18,17 @@ public class Entity {
 	private String name;
 	private boolean valid;
 	private ArrayMap<String, Boolean> tags;
-	private ArrayMap<String, Component> components;
-	private StateGraph sg;
+	private ArrayMap<String, component> components;
+	private stategraph sg;
+	private spineanimation spineanim;
 	//private EventList eventListener;
 	//private Array<Entity> children;
 	
-	public Entity(String name) {
+	public entity(String name) {
 		this.name = name;
 		GUID = GUID_COUNTER++;
 		tags = new ArrayMap<String, Boolean>();
+		components = new ArrayMap<String, component>();
 	}
 	
 	public int GetGUID() {
@@ -67,18 +71,18 @@ public class Entity {
 				c = Class.forName(name);
 				StateGraphs.put(name, c);
 			}
-			this.sg = (StateGraph) c.newInstance();
+			this.sg = (stategraph) c.newInstance();
 			this.sg.Go2FirstState();
 		} catch (Exception e) {
 			Gdx.app.error(TAG, "stategraph is not well defined: " + name);
 		}
 	}
 	
-	public void AddComponent(String name) {
+	public component AddComponent(String name) {
 		name = "com.sn.components." + name;
 		if (components.containsKey(name)) {
 			Gdx.app.error(TAG, "component already added: " + name);
-			return;
+			return components.get(name);
 		}
 		
 		try {
@@ -87,12 +91,17 @@ public class Entity {
 				c = Class.forName(name);
 				Components.put(name, c);
 			}
-			Component comp = (Component) c.newInstance();
+			component comp = (component) c.newInstance();
+			comp.SetEntity(this);
 			components.put(name, comp);
+			if (name.equals("com.sn.components.spineanimation")) {
+				spineanim = (spineanimation) comp;
+			}
+			return comp;
 		} catch (Exception e) {
 			Gdx.app.error(TAG, "component is not well defined: " + name);
 		}
-		
+		return null;
 		/*
 		try {
 			name = "com.sn.components." + name;
@@ -118,5 +127,11 @@ public class Entity {
 		return null;
 		*/
 		
+	}
+
+	public void update(float delta) {
+		if (spineanim != null) {
+			spineanim.render(delta);
+		}
 	}
 }

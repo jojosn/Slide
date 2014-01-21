@@ -3,16 +3,17 @@ package com.sn.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.sn.slide.EntityManager;
 import com.sn.slide.Slide;
 import com.sn.slide.SlideInputProcessor;
 import com.sn.slide.SlideMap;
 
-public class GameScreen implements Screen {
-	public static final String TAG = GameScreen.class.getName();
+public class gamescreen implements Screen {
+	public static final String TAG = gamescreen.class.getName();
 	//private Slide slide;
 	private SlideMap map;
 	
-	public GameScreen(Slide slide) {
+	public gamescreen(Slide slide) {
 		//this.slide = slide;
 	}
 	
@@ -22,6 +23,7 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		map.render();
+		EntityManager.GetInstance().update(delta);
 	}
 
 	@Override
