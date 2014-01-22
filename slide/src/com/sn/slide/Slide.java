@@ -9,7 +9,7 @@ public class Slide extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new gamescreen(this));
+		setScreen(new gamescreen());
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 	}
 }

@@ -3,72 +3,78 @@ package com.sn.slide;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.esotericsoftware.spine.AnimationState;
-import com.esotericsoftware.spine.AnimationStateData;
+import com.badlogic.gdx.utils.Array;
+import com.esotericsoftware.spine.Animation;
+import com.esotericsoftware.spine.Event;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonData;
 import com.esotericsoftware.spine.SkeletonJson;
 import com.esotericsoftware.spine.SkeletonRenderer;
+import com.esotericsoftware.spine.SkeletonRendererDebug;
 
 public class Spine {
-	private SkeletonRenderer renderer;
-	//private SkeletonRendererDebug debugRenderer;
+	private SkeletonRenderer skeletonRenderer;
+	private SkeletonRendererDebug debugRenderer;
 	
 	private TextureAtlas atlas;
 	private Skeleton skeleton;
-	private AnimationState animState;
+	Animation animation;
+	float time;
+	//private AnimationState animState;
 	private SpriteBatch batch;
+	private Array<Event> events = new Array<Event>();
 	
-	//private Array<Event> events = new Array<Event>();
-	//private Animation animation;
-	//float time;
-	
+	/*
+	static class Box2dAttachment extends RegionAttachment {
+		Body body;
+
+		public Box2dAttachment (String name) {
+			super(name);
+		}
+	}
+	*/
 	public Spine(String spinePath) {
-		renderer = new SkeletonRenderer();
+		skeletonRenderer = new SkeletonRenderer();
 		batch = new SpriteBatch();
-		//debugRenderer = new SkeletonRendererDebug();
+		debugRenderer = new SkeletonRendererDebug();
+		debugRenderer.setRegionAttachments(false);
+		debugRenderer.setBones(false);
 		
 		atlas = new TextureAtlas(Gdx.files.internal(spinePath+".atlas"));
-		SkeletonJson json = new SkeletonJson(atlas);
-		json.setScale(.3f);
-		SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(spinePath+".json"));
-		AnimationStateData stateData = new AnimationStateData(skeletonData);
-		stateData.setMix("walk", "jump", 0.2f);
-		stateData.setMix("jump", "walk", 0.4f);
-		stateData.setMix("jump", "jump", 0.2f);
-		animState = new AnimationState(stateData);
-		animState.setAnimation(0, "walk", true);
-		//animState.addAnimation(0, "jump", false, 0);
-		//animState.addAnimation(0, "walk", true, 0);
-		//animation = skeletonData.findAnimation("walk");
-		
-		skeleton = new Skeleton(skeletonData);
-		skeleton.setToSetupPose();
-		//skeleton.setX(50);
-		//skeleton.setY(95);
-	}
-	
-	public void playAnimation(String animationName) {
-		animState.setAnimation(0, animationName, false);
-		animState.addAnimation(0, "walk", true, 0);
-	}
-	
-	public void render(float delta) {
 		/*
+		AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(atlas) {
+			public RegionAttachment newRegionAttachment (Skin skin, String name, String path) {
+				Box2dAttachment attachment = new Box2dAttachment(name);
+				AtlasRegion region = atlas.findRegion(attachment.getName());
+				if (region == null) throw new RuntimeException("Region not found in atlas: " + attachment);
+				attachment.setRegion(region);
+				return attachment;
+			}
+		};
+		*/
+		
+		SkeletonJson json = new SkeletonJson(atlas);
+		json.setScale(0.4f);
+		SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(spinePath+".json"));
+		animation = skeletonData.findAnimation("walk");
+		skeleton = new Skeleton(skeletonData);
+	}
+
+	public void render(float delta) {
 		float lastTime = time;
-		time += dt;
+		time += delta;
+		
+		batch.begin();
+		
 		events.clear();
 		animation.apply(skeleton, lastTime, time, true, events);
-		if (events.size > 0) System.out.println(events);
-		*/
-		batch.begin();
-		skeleton.update(delta);
 		skeleton.updateWorldTransform();
-		animState.update(delta);
-		animState.apply(skeleton);
-		renderer.draw(batch, skeleton);
+		if (events.size > 0) System.out.println(events);
+		skeletonRenderer.draw(batch, skeleton);
+		
 		batch.end();
-		//debugRenderer.draw(skeleton);
+		
+		debugRenderer.draw(skeleton);
 	}
 	
 	public void setX(float x) {

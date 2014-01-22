@@ -40,7 +40,11 @@
    eJzt0LEJADAIRUHdf4sMY5+NskIaEeQOXu3HCAAAYIvK6QW7TP+z+/5J/Xalhh5wBK0j
   </data>
  </layer>
- <objectgroup draworder="topdown" name="phy" width="75" height="15">
-  <object x="0" y="384" width="1161" height="97"/>
+ <objectgroup draworder="topdown" name="physics" width="75" height="15">
+  <properties>
+   <property name="physics" value="1"/>
+  </properties>
+  <object name="stock0" x="0" y="384" width="2397" height="93"/>
+  <object name="stock1" x="158" y="255" width="98" height="45"/>
  </objectgroup>
 </map>

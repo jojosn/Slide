@@ -2,8 +2,8 @@ package com.sn.prefabs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ArrayMap;
-import com.badlogic.gdx.utils.reflect.Constructor;
 import com.sn.components.component;
+import com.sn.components.physics;
 import com.sn.components.spineanimation;
 import com.sn.stategraphs.stategraph;
 
@@ -21,6 +21,7 @@ public class entity {
 	private ArrayMap<String, component> components;
 	private stategraph sg;
 	private spineanimation spineanim;
+	private physics phy;
 	//private EventList eventListener;
 	//private Array<Entity> children;
 	
@@ -96,6 +97,8 @@ public class entity {
 			components.put(name, comp);
 			if (name.equals("com.sn.components.spineanimation")) {
 				spineanim = (spineanimation) comp;
+			} else if (name.equals("com.sn.components.physics")) {
+				phy = (physics) comp;
 			}
 			return comp;
 		} catch (Exception e) {
@@ -132,6 +135,9 @@ public class entity {
 	public void update(float delta) {
 		if (spineanim != null) {
 			spineanim.render(delta);
+		}
+		if (phy != null) {
+			phy.update(delta);
 		}
 	}
 }
