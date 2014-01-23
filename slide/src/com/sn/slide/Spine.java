@@ -37,8 +37,8 @@ public class Spine {
 		skeletonRenderer = new SkeletonRenderer();
 		batch = new SpriteBatch();
 		debugRenderer = new SkeletonRendererDebug();
-		debugRenderer.setRegionAttachments(false);
-		debugRenderer.setBones(false);
+		//debugRenderer.setRegionAttachments(false);
+		//debugRenderer.setBones(false);
 		
 		atlas = new TextureAtlas(Gdx.files.internal(spinePath+".atlas"));
 		/*
@@ -66,6 +66,7 @@ public class Spine {
 		
 		batch.begin();
 		
+		batch.setProjectionMatrix(Sld.camera.combined);
 		events.clear();
 		animation.apply(skeleton, lastTime, time, true, events);
 		skeleton.updateWorldTransform();
@@ -73,8 +74,8 @@ public class Spine {
 		skeletonRenderer.draw(batch, skeleton);
 		
 		batch.end();
-		
-		debugRenderer.draw(skeleton);
+
+		//debugRenderer.draw(skeleton);
 	}
 	
 	public void setX(float x) {

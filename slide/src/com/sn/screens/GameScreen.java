@@ -19,7 +19,7 @@ public class gamescreen implements Screen {
 		
 		Sld.sldmap.render();
 		EntityManager.GetInstance().update(delta);
-		Sld.phyWorld.render(Sld.camera);
+		Sld.phyWorld.render();
 	}
 
 	@Override
@@ -30,7 +30,8 @@ public class gamescreen implements Screen {
 		Sld.sldmap = new SlideMap("map/skite.tmx");
 		Sld.camera = Sld.sldmap.getGroundCamera();
 		Sld.phyWorld = new PhysicsWorld();
-		Gdx.input.setInputProcessor(new SlideInputProcessor(Sld.sldmap));
+		Sld.input = new SlideInputProcessor(Sld.sldmap);
+		Gdx.input.setInputProcessor(Sld.input);
 	}
 
 	@Override

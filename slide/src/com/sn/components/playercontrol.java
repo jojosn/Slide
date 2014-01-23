@@ -2,6 +2,7 @@ package com.sn.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.sn.slide.Sld;
 
 public class playercontrol extends component {
 	private boolean enabled = true;
@@ -15,8 +16,15 @@ public class playercontrol extends component {
 			return;
 		}
 		
-		if (Gdx.input.isKeyPressed(Keys.UP)) {
-			
+		/*
+		if (Gdx.input.isKeyPressed(Keys.D)) {
+			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
+			motor.walkForward();
+		} else if (Gdx.input.isKeyPressed(Keys.A)) {
+			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
+			motor.walkBackward();
 		}
+		*/
+		
 	}
 }

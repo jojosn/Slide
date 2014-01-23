@@ -1,13 +1,17 @@
 package com.sn.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.sn.slide.PhysicsWorld;
 import com.sn.slide.Sld;
 
 public class physics extends component {
+	public static final String TAG = physics.class.getName();
+	
 	private spineanimation spineanim;
 	private Vector2 motorVelocity = new Vector2();
 	private Body spinebody;
@@ -17,9 +21,14 @@ public class physics extends component {
 		BodyDef bodydef = new BodyDef();
 		bodydef.type = BodyType.DynamicBody;
 		spinebody = Sld.phyWorld.createBody(bodydef);
+		spinebody.setFixedRotation(true);
 		
 		PolygonShape boxpoly = new PolygonShape();
-		boxpoly.setAsBox(20, 2);
+		Vector2[] vecs = new Vector2[2];
+		vecs[0] = new Vector2(0,0);
+		vecs[1] = new Vector2(0.5f,0);
+		//boxpoly.set(vecs);
+		boxpoly.setAsBox(0.2f, 0.1f);
 		spinebody.createFixture(boxpoly, 1);
 		boxpoly.dispose();
 	}
@@ -31,7 +40,7 @@ public class physics extends component {
 	public void update(float delta) {
 		if (spineanim != null) {
 			Vector2 pos = spinebody.getPosition();
-			spineanim.setxy(pos.x, pos.y);
+			spineanim.setxy(pos.x*PhysicsWorld.scale, pos.y*PhysicsWorld.scale);
 		}
 	}
 	
@@ -48,6 +57,32 @@ public class physics extends component {
 	}
 	
 	public void setxy(float x, float y) {
-		spinebody.setTransform(x, y, spinebody.getAngle());
+		spinebody.setTransform(x/PhysicsWorld.scale, y/PhysicsWorld.scale, spinebody.getAngle());
+		spineanim.setxy(x, y);
+	}
+	
+	public void applyImpulse(Vector2 vec) {
+		Gdx.app.log(TAG, "apply impulse x="+vec.x+" y="+vec.y);
+		spinebody.applyLinearImpulse(vec, spinebody.getWorldCenter(), true);
+	}
+	
+	public void applyForce(Vector2 vec) {
+		spinebody.applyForceToCenter(vec, true);
+	}
+	
+	public void setLinerVelocity(Vector2 vec) {
+		spinebody.setLinearVelocity(vec);
+	}
+	
+	public void setSpeedX(float x) {
+		Vector2 vec = spinebody.getLinearVelocity();
+		vec.set(x, vec.y);
+		spinebody.setLinearVelocity(vec);
+	}
+	
+	public void setSpeedY(float y) {
+		Vector2 vec = spinebody.getLinearVelocity();
+		vec.set(vec.x, y);
+		spinebody.setLinearVelocity(vec);
 	}
 }

@@ -1,9 +1,12 @@
 package com.sn.prefabs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.sn.components.component;
+import com.sn.components.locomotor;
 import com.sn.components.physics;
+import com.sn.components.playercontrol;
 import com.sn.components.spineanimation;
 import com.sn.stategraphs.stategraph;
 
@@ -19,9 +22,11 @@ public class entity {
 	private boolean valid;
 	private ArrayMap<String, Boolean> tags;
 	private ArrayMap<String, component> components;
-	private stategraph sg;
-	private spineanimation spineanim;
-	private physics phy;
+	private Array<updateable> updators;
+	public stategraph sg;
+	public spineanimation spineanim;
+	public physics phy; 
+	public playercontrol pcontrol;
 	//private EventList eventListener;
 	//private Array<Entity> children;
 	
@@ -79,6 +84,11 @@ public class entity {
 		}
 	}
 	
+	public component getComponent(String name) {
+		name = "com.sn.components." + name;
+		return components.get(name);
+	}
+	
 	public component AddComponent(String name) {
 		name = "com.sn.components." + name;
 		if (components.containsKey(name)) {
@@ -99,6 +109,8 @@ public class entity {
 				spineanim = (spineanimation) comp;
 			} else if (name.equals("com.sn.components.physics")) {
 				phy = (physics) comp;
+			} else if (name.equals("com.sn.components.playercontrol")) {
+				pcontrol = (playercontrol) comp;
 			}
 			return comp;
 		} catch (Exception e) {
@@ -138,6 +150,9 @@ public class entity {
 		}
 		if (phy != null) {
 			phy.update(delta);
+		}
+		if (pcontrol != null) {
+			pcontrol.update(delta);
 		}
 	}
 }

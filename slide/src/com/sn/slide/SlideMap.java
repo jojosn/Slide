@@ -28,13 +28,13 @@ public class SlideMap {
 	private Array<int[]> layerIndexs;
 	private OrthographicCamera groundCamera;
 	
-	private int width;
-	private int height;
-	private int[] limits = {0,0,0,0};
-	private Vector2 adjustedxy;
+	private float width;
+	private float height;
+	private float[] limits = {0,0,0,0};
+	private Vector2 adjustedvec;
 	
 	public SlideMap(String fileName) {
-		adjustedxy = new Vector2();
+		adjustedvec = new Vector2();
 		
 		renderers = new Array<TiledMapRenderer>();
 		cameras = new Array<OrthographicCamera>();
@@ -115,6 +115,7 @@ public class SlideMap {
 	}
 	
 	private void adjustxy(float x, float y) {
+		/*
 		float gx = groundCamera.position.x;
 		float gy = groundCamera.position.y;
 		if (x+gx < limits[0]) {
@@ -129,13 +130,14 @@ public class SlideMap {
 		if (y+gy > limits[3]) {
 			y = limits[3] - gy;
 		}
-		adjustedxy.set(x, y);
+		*/
+		adjustedvec.set(x, y);
 	}
 	
 	public void translate(float x, float y) {
 		adjustxy(x, y);
-		x = adjustedxy.x;
-		y = adjustedxy.y;
+		x = adjustedvec.x;
+		y = adjustedvec.y;
 		for (int i = 0; i < renderers.size; i++) {
 			Vector2 speed = speeds.get(i);
 			OrthographicCamera camera = cameras.get(i);
@@ -143,9 +145,18 @@ public class SlideMap {
 			camera.update();
 			renderers.get(i).setView(camera);
 		}
+		Sld.phyWorld.translate(adjustedvec);
 	}
 	
 	public OrthographicCamera getGroundCamera() {
 		return groundCamera;
+	}
+	
+	public float getWidth() {
+		return width;
+	}
+	
+	public float getHeight() {
+		return height;
 	}
 }

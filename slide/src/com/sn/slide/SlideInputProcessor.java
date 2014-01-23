@@ -1,6 +1,8 @@
 package com.sn.slide;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
+import com.sn.components.locomotor;
 
 
 public class SlideInputProcessor implements InputProcessor {
@@ -15,13 +17,28 @@ public class SlideInputProcessor implements InputProcessor {
 	
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
+		if (keycode == Keys.W) {
+			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
+			motor.jump();
+		} else if (keycode == Keys.A) {
+			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
+			motor.walkBackward();
+		} else if (keycode == Keys.D) {
+			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
+			motor.walkForward();
+		}
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
 		// TODO Auto-generated method stub
+		if (keycode == Keys.W) {
+			
+		} else if (keycode == Keys.A || keycode == Keys.D) {
+			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
+			motor.stopMoving();
+		}
 		return false;
 	}
 
@@ -65,5 +82,6 @@ public class SlideInputProcessor implements InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	
 }
