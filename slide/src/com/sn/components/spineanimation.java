@@ -7,6 +7,7 @@ public class spineanimation extends component {
 	
 	public void setSpine(String path) {
 		spine = new Spine(path);
+		spine.playAnimationLoop("walk");
 	}
 	
 	public void render(float delta) {
@@ -24,5 +25,17 @@ public class spineanimation extends component {
 	
 	public void sety(float y) {
 		spine.setY(y);
+	}
+	
+	public void jump() {
+		spine.playAnimation("jump", "walk");
+	}
+	
+	public void kick() {
+		spine.playAnimation("kick", "walk");
+	}
+	
+	public void punch() {
+		spine.playAnimation("punch", "walk");
 	}
 }

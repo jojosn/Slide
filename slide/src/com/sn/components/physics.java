@@ -28,7 +28,7 @@ public class physics extends component {
 		vecs[0] = new Vector2(0,0);
 		vecs[1] = new Vector2(0.5f,0);
 		//boxpoly.set(vecs);
-		boxpoly.setAsBox(0.2f, 0.1f);
+		boxpoly.setAsBox(0.1f, 0.05f);
 		spinebody.createFixture(boxpoly, 1);
 		boxpoly.dispose();
 	}

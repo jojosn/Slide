@@ -14,7 +14,7 @@ public class rambo {
 		
 		// add skeleton animation
 		spineanimation spineanim = (spineanimation) ent.AddComponent("spineanimation");
-		spineanim.setSpine("spine/spineboy");
+		spineanim.setSpine("spine/comicboy");
 		
 		// add physics
 		physics phy = (physics) ent.AddComponent("physics");

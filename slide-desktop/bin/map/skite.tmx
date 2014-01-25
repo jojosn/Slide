@@ -44,7 +44,7 @@
   <properties>
    <property name="physics" value="1"/>
   </properties>
-  <object name="stock0" x="0" y="384" width="2399" height="97"/>
+  <object name="stock0" x="0" y="384" width="2399" height="96"/>
   <object name="stock1" x="160" y="256" width="97" height="33"/>
  </objectgroup>
 </map>

@@ -7,8 +7,17 @@ public class locomotor extends component {
 	private Vector2 vec = new Vector2();
 	
 	public void jump() {
-		vec.set(0, 0.6f);
+		vec.set(0, 0.25f);
 		ent.phy.applyImpulse(vec);
+		ent.spineanim.jump();
+	}
+	
+	public void kick() {
+		ent.spineanim.kick();
+	}
+	
+	public void punch() {
+		ent.spineanim.punch();
 	}
 	
 	public void walkForward() {

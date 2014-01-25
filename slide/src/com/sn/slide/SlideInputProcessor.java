@@ -26,6 +26,12 @@ public class SlideInputProcessor implements InputProcessor {
 		} else if (keycode == Keys.D) {
 			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
 			motor.walkForward();
+		} else if (keycode == Keys.S) {
+			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
+			motor.kick();
+		} else if (keycode == Keys.SPACE) {
+			locomotor motor = (locomotor) Sld.player.getComponent("locomotor");
+			motor.punch();
 		}
 		return false;
 	}
