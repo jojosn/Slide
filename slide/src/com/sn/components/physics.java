@@ -15,6 +15,7 @@ public class physics extends component {
 	private spineanimation spineanim;
 	private Vector2 motorVelocity = new Vector2();
 	private Body spinebody;
+	private Vector2 tmpVec = new Vector2();
 	
 	public physics() {
 		// create spinebody
@@ -40,7 +41,21 @@ public class physics extends component {
 	public void update(float delta) {
 		if (spineanim != null) {
 			Vector2 pos = spinebody.getPosition();
+			
+			Vector2 oldAnimPos = spineanim.getPosition();
+			float oldx = oldAnimPos.x;
+			float oldy = oldAnimPos.y;
+			
 			spineanim.setxy(pos.x*PhysicsWorld.scale, pos.y*PhysicsWorld.scale);
+			Vector2 curAnimPos = spineanim.getPosition();
+			
+			if (Math.abs(curAnimPos.x-Sld.camera.position.x) < 2 || Math.abs(oldx-Sld.camera.position.x) < 8) {
+				float dx = curAnimPos.x - oldx;
+				float dy = curAnimPos.y - oldy;
+				if (dx != 0 || dy != 0) {
+					Sld.sldmap.translate(dx, dy);
+				}
+			}
 		}
 	}
 	
@@ -84,5 +99,11 @@ public class physics extends component {
 		Vector2 vec = spinebody.getLinearVelocity();
 		vec.set(vec.x, y);
 		spinebody.setLinearVelocity(vec);
+	}
+	
+	public Vector2 getPosition() {
+		Vector2 pos = spinebody.getPosition();
+		tmpVec.set(pos.x*PhysicsWorld.scale, pos.y*PhysicsWorld.scale);
+		return tmpVec;
 	}
 }

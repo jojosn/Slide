@@ -17,7 +17,7 @@ public class gamescreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		Sld.sldmap.render();
+		Sld.sldmap.render(delta);
 		EntityManager.GetInstance().update(delta);
 		Sld.phyWorld.render();
 	}

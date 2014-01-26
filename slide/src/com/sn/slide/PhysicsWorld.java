@@ -119,7 +119,7 @@ public class PhysicsWorld {
 			remaining -= d;
 		}
 		
-		//box2dRenderer.render(world, camera.combined);
+		box2dRenderer.render(world, camera.combined);
 	}
 	
 	public void dispose() {

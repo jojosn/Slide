@@ -19,7 +19,7 @@ public class rambo {
 		// add physics
 		physics phy = (physics) ent.AddComponent("physics");
 		phy.setSpineAnim(spineanim);
-		phy.setxy((float) (500+Math.random()*200), 300);
+		phy.setxy(100, 100);
 		
 		// add locomotor
 		ent.AddComponent("locomotor");
@@ -28,6 +28,7 @@ public class rambo {
 		
 		Sld.player = ent;
 		Gdx.app.debug(TAG, "rambo is created: " + ent.GetGUID());
+		//Sld.sldmap.followTarget(ent);
 		return ent;
 	}
 }

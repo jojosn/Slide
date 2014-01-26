@@ -16,7 +16,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.sn.prefabs.entity;
 
 public class SlideMap {
 	public static final String TAG = SlideMap.class.getName();
@@ -27,6 +29,8 @@ public class SlideMap {
 	private Array<Vector2> speeds;
 	private Array<int[]> layerIndexs;
 	private OrthographicCamera groundCamera;
+	private entity followEnt;
+	private Vector3 lerpTarget = new Vector3();
 	
 	private float width;
 	private float height;
@@ -104,7 +108,8 @@ public class SlideMap {
 		limits[3] = height - sh/2;
 	}
 	
-	public void render() {
+	public void render(float delta) {
+		follow(delta);
 		for (int i = 0; i < layerIndexs.size; i++) {
 			renderers.get(i).render(layerIndexs.get(i));
 		}
@@ -114,8 +119,11 @@ public class SlideMap {
 		map.dispose();
 	}
 	
+	public void followTarget(entity ent) {
+		this.followEnt = ent;
+	}
+	
 	private void adjustxy(float x, float y) {
-		/*
 		float gx = groundCamera.position.x;
 		float gy = groundCamera.position.y;
 		if (x+gx < limits[0]) {
@@ -130,8 +138,21 @@ public class SlideMap {
 		if (y+gy > limits[3]) {
 			y = limits[3] - gy;
 		}
-		*/
 		adjustedvec.set(x, y);
+	}
+	
+	private void follow(float delta) {
+		if (followEnt != null && followEnt.phy != null) {
+			lerpTarget.set(followEnt.phy.getPosition(), 0);
+			Gdx.app.log(TAG, "lerp pos x="+lerpTarget.x+" y="+lerpTarget.y);
+			for (int i = 0; i < renderers.size; i++) {
+				//Vector2 speed = speeds.get(i);
+				OrthographicCamera camera = cameras.get(i);
+				camera.position.lerp(lerpTarget, 2f * delta);
+				camera.update();
+				renderers.get(i).setView(camera);
+			}
+		}
 	}
 	
 	public void translate(float x, float y) {

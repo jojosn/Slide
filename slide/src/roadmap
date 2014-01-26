@@ -1,17 +1,14 @@
 . limit map camera
 . player and player control
 . physics world
+. follow camera
 
-. enemy and AI framework
-. other entity
-
+. spine and contorl optimize
+. level data(physics world, ents, particle, decorates, music framework)
+. load level data and change scene
+. other entitys and enemy and AI framework
 . entity punch and kick
-
-. level data
-
-. loading resource and change scene/level
+. UI framework and tools
 
 . skeleton animation and tools and BOX2D
-
-. UI framework and tools
 . sound effect system

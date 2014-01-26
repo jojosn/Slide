@@ -85,6 +85,7 @@ public class Spine {
 	
 	public void render(float delta) {		
 		batch.begin();
+		batch.setProjectionMatrix(Sld.camera.combined);
 		animstate.update(delta);
 		animstate.apply(skeleton);
 		skeleton.updateWorldTransform();
@@ -109,6 +110,14 @@ public class Spine {
 	
 	public void setY(float y) {
 		skeleton.setY(y);
+	}
+	
+	public float getX() {
+		return skeleton.getX();
+	}
+	
+	public float getY() {
+		return skeleton.getY();
 	}
 	
 	public void dispose() {

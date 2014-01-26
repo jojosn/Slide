@@ -1,13 +1,16 @@
 package com.sn.components;
 
+import com.badlogic.gdx.math.Vector2;
+import com.sn.slide.Sld;
 import com.sn.slide.Spine;
 
 public class spineanimation extends component {
 	private Spine spine;
+	private Vector2 vec = new Vector2();
 	
 	public void setSpine(String path) {
 		spine = new Spine(path);
-		spine.playAnimationLoop("walk");
+		spine.playAnimationLoop("idle");
 	}
 	
 	public void render(float delta) {
@@ -27,15 +30,28 @@ public class spineanimation extends component {
 		spine.setY(y);
 	}
 	
+	public void idle() {
+		spine.playAnimationLoop("idle");
+	}
+	
+	public void walk() {
+		spine.playAnimationLoop("walk");
+	}
+	
 	public void jump() {
-		spine.playAnimation("jump", "walk");
+		spine.playAnimation("jump", "idle");
 	}
 	
 	public void kick() {
-		spine.playAnimation("kick", "walk");
+		spine.playAnimation("kick", "idle");
 	}
 	
 	public void punch() {
-		spine.playAnimation("punch", "walk");
+		spine.playAnimation("punch", "idle");
+	}
+	
+	public Vector2 getPosition() {
+		vec.set(spine.getX(), spine.getY());
+		return vec;
 	}
 }

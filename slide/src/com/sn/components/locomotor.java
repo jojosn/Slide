@@ -22,14 +22,17 @@ public class locomotor extends component {
 	
 	public void walkForward() {
 		ent.phy.setSpeedX(3);
+		ent.spineanim.walk();
 	}
 	
 	public void walkBackward() {
 		ent.phy.setSpeedX(-3);
+		ent.spineanim.walk();
 	}
 	
 	public void stopMoving() {
 		ent.phy.setSpeedX(0);
+		ent.spineanim.idle();
 	}
 	
 	public void runForward() {}
